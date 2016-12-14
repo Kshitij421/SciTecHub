@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_HOST_USER="dr.kshitijwarungase@gmail.com"
+EMAIL_HOST_PASSWORD='9922045419'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+
 
 # Application definition
 
@@ -101,3 +107,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env","static_root")
+
+#here this static files are added to rooot path from this staticfiles_directory
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static","our_static"),
+    #'/var/www/static/',
+)
+
+# Only When to be uploaded by enduser 
+
+#then new file is added to this root path
+
+MEDIA_URL="/media/"
+MEDIA_ROOT= os.path.os.path.join(os.path.dirname(BASE_DIR), "static_in_env","media_root")

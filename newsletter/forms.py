@@ -2,11 +2,29 @@ from django import forms
 from .models import SignUp
 
 
+
+class ContactForm(forms.Form):
+	full_name=forms.CharField(required=False)
+	email=forms.EmailField()
+	message=forms.CharField()
+	def clean_email(self):
+
+		email=self.cleaned_data.get('email')
+		email_base,provider=email.split('@')
+		domain,extension=provider.split('.')
+
+		if not extension =="edu":
+			raise forms.ValidationError("Please Use A Valid College (.edu) Email Address")
+
+		return email
+
+
+
 class SignUpForm(forms.ModelForm):
 	class Meta:
 		model=SignUp
 
-		fields=['full_name','email']
+		fields=['full_name','email',]
 		####exclude=['full_name']
 
 	def clean_email(self):
@@ -15,13 +33,9 @@ class SignUpForm(forms.ModelForm):
 		email_base,provider=email.split('@')
 		domain,extension=provider.split('.')
 
-		# if not domain =="gmail":
-		# 	raise forms.ValidationError("Please Your Gmail Email Address")
 		if not extension =="edu":
 			raise forms.ValidationError("Please Use A Valid College (.edu) Email Address")
 
-		#if not "edu" in email:
-		#	raise forms.ValidationError("Please Use a Valid College (.edu ) Email Address")
 		return email
 
 	def clean_full_name(self):
